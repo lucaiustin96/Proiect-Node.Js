@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const auth = require('./routes/auth');
+const users = require('./routes/users');
+const products = require('./routes/products');
 // const errorHandler = require('./middlewares/error-handler-middleware');
 const cors = require('cors')
 
@@ -20,12 +21,13 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(cors())
-app.use(express.json())
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
  
-app.use('/api/v1/auth', auth);
+app.use('/api/v1/users', users);
+app.use('/api/v1/products', products);
 
 app.use(express.static('public'))
 
