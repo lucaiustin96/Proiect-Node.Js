@@ -1,4 +1,4 @@
-/*https://jasonwatmore.com/post/2020/06/17/nodejs-mongodb-api-jwt-authentication-with-refresh-tokens#user-model-js*/
+ /*https://jasonwatmore.com/post/2020/06/17/nodejs-mongodb-api-jwt-authentication-with-refresh-tokens#user-model-js*/
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const auth = require('./routes/auth');
 // const errorHandler = require('./middlewares/error-handler-middleware');
 const cors = require('cors')
-
 
 const app = express();
 
@@ -46,6 +45,7 @@ app.use(function(err, req, res, next) {
             return res.status(500).json({ message: err.message });
     }
 })
+
 app.listen(3000, () => {
     console.log('Example app listening at http://localhost:3000')
 })

@@ -18,8 +18,7 @@ exports.createUserSchema = async (req, res, next) => {
         username: Joi.string()
             .alphanum()
             .min(3)
-            .max(30)
-            .required(),    
+            .max(30),    
             
         email: Joi.string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),

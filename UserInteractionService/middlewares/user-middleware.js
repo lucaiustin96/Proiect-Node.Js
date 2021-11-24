@@ -1,6 +1,5 @@
 const jwt = require('express-jwt');
 const User = require('../models/user-model');
-const RefreshToken = require('../models/refresh-token-model');
 
 exports.authUser = (roles = []) => {
     // roles param can be a single role string (e.g. Role.User or 'User') 
