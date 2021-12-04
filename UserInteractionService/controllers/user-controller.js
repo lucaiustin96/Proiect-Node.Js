@@ -3,7 +3,6 @@ const userService = require('../services/user-service');
 const userPermissions = require('../permissions/user-permissions');
 
 exports.create = (req, res, next) => {
-    console.log(req.body);
     userService.create(req.body)
         .then((user) => {
             res.status(200).send(user);
@@ -25,5 +24,27 @@ exports.getById = (req, res, next) => {
 
     userService.getById(req.params.id)
         .then(user => user ? res.send(user) : res.sendStatus(404))
+        .catch(next);
+}
+
+exports.editUserDetails = (req, res, next) => {
+    userService.editUserDetails(req.user, req.body)
+        .then((userDetails) => {
+            res.status(200).send(userDetails);
+        })
+        .catch(next);
+}
+
+exports.getUserDetails = (req, res, next) => {
+    userService.getUserDetails(req.params.userId)
+        .then(userDetails => userDetails ? res.send(userDetails) : res.sendStatus(404))
+        .catch(next);    
+}
+
+exports.addPhoto = (req, res, next) => {
+    userService.addPhoto(req.user, req.file)
+        .then((response) => {
+            res.status(200).send(response);
+        })
         .catch(next);
 }

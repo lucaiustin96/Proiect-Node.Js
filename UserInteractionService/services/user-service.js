@@ -1,4 +1,5 @@
 const User = require('../models/user-model');
+const UserDetails = require('../models/user-details-model');
 const RefreshToken = require('../models/refresh-token-model');
 const Role = require('../_helpers/role');
 const bcrypt = require('bcrypt');
@@ -9,6 +10,9 @@ exports.create = async (userDetails) => {
         lastName: userDetails.lastName,
         // username: userDetails.username,
         email: userDetails.email,
+        birthDay: userDetails.birthDay,
+        birthMonth: userDetails.birthMonth,
+        birthYear: userDetails.birthYear,
         passwordHash: await hashPassword(userDetails.password),
         role: Role.Admin
     });
@@ -17,12 +21,6 @@ exports.create = async (userDetails) => {
 }
 
 exports.getAll = async () => {
-    todos = [
-        { id: 0, text: 'Learn React', completed: true },
-        { id: 1, text: 'Learn Redux', completed: false, color: 'purple' },
-        { id: 2, text: 'Build something fun!', completed: false, color: 'blue' }
-      ];
-    return todos;
     const users = await User.find();
     return users.map(x => basicDetails(x));
 }
@@ -37,6 +35,39 @@ exports.getRefreshToken = async (token) => {
     if (!refreshToken || !refreshToken.isActive) throw 'Invalid token';
     return refreshToken;
 }
+
+exports.editUserDetails = async (user, userDetails) => {
+    return await UserDetails.findOneAndUpdate(
+        { userId: user.id },
+        userDetails,
+        { 
+            new: true,
+            upsert: true,
+            useFindAndModify: false
+        }
+    );
+}
+
+exports.getUserDetails = async (userId) => {
+    return await UserDetails.findOne({ userId: userId }).select({
+        description: 1,
+        photos: 1,
+        userId: 1,
+    });
+}
+
+exports.addPhoto = async (user, photo) => {
+    return await UserDetails.findOneAndUpdate(
+        { userId: user.id },
+        { $push: { photos: photo.path } },
+        { 
+            new: true,
+            upsert: true,
+            useFindAndModify: false
+        }
+    );
+}
+
 
 // helper functions
 

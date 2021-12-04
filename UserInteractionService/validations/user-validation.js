@@ -11,6 +11,7 @@ exports.createUserSchema = async (req, res, next) => {
 
         lastName: Joi.string()
             .alphanum()
+
             .min(3)
             .max(30)
             .required(),
@@ -21,17 +22,26 @@ exports.createUserSchema = async (req, res, next) => {
             .max(30),    
             
         email: Joi.string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+            .required(),
 
-        birth_year: Joi.number()
+        birthYear: Joi.number()
             .integer()
             .min(1900)
             .max(2013),
+        birthMonth: Joi.number()
+            .integer()
+            .min(1)
+            .max(12),
+        birthDay: Joi.number()
+            .integer()
+            .min(1)
+            .max(31),
                 
         password: Joi.string()
             .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
         
-        repeat_password: Joi.ref('password'),
+        repeatPassword: Joi.ref('password'),
     });
 
     validateRequest(req, next, schema);

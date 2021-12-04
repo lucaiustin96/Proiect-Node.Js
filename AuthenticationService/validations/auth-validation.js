@@ -3,7 +3,10 @@ const validateRequest = require('../middlewares/validate-request-middleware');
 
 exports.authenticateSchema = (req, res, next) => {
     const schema = Joi.object({
-        username: Joi.string().required(),
+        email: Joi.string()
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+        .required(),
+
         password: Joi.string().required()
     });
 

@@ -4,7 +4,7 @@ const authPermissions = require('../permissions/user-permissions');
 
 exports.authenticate = (req, res, next) => {
     authService.authenticate(
-        req.body.username, 
+        req.body.email, 
         req.body.password, 
         req.body.ipAddress
     )

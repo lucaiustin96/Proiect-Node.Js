@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-exports.authenticate = async (username, password, ipAddress) => {
-    const user = await User.findOne({ username: username});
+exports.authenticate = async (email, password, ipAddress) => {
+    const user = await User.findOne({ email: email});
     
     if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
         throw 'Username or password is incorrect';

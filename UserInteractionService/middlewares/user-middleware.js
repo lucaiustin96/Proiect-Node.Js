@@ -1,3 +1,5 @@
+//https://jasonwatmore.com/post/2018/11/28/nodejs-role-based-authorization-tutorial-with-example-api
+
 const jwt = require('express-jwt');
 const User = require('../models/user-model');
 
